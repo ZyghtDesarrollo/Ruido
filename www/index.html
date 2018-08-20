@@ -1,0 +1,462 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8">
+    <title>Prexor</title>
+    <meta name="viewport" content="width=device-width">
+    <link href="css/bootstrap.min.css" rel="stylesheet" />
+    <link rel="stylesheet" href="css/bootstrap-switch.css">
+    <link rel="stylesheet" href="css/jquery-ui.css">
+    <link rel="stylesheet" href="css/jquery.dynameter.css">
+
+    <script type="text/javascript" charset="utf-8" src="cordova.js"></script>
+    <script src="js/jquery-1.11.1.js"></script>
+    <script src="js/bootstrap.min.js"></script>
+    <script src="js/jquery-ui.min.js"></script>
+    <script src="js/jquery.dynameter.js"></script>
+    <script src="js/html2canvas.js"></script>
+    <script src="js/bootstrap-switch.js"></script>
+    <script src="js/validator.js"></script>
+    <script src="js/bootbox.min.js"></script>
+    <script src="js/sparkline.min.js"></script>
+    
+    <script src="js/values.js"></script>
+
+    <script src="js/index.js"></script>
+    <!--<script src="js/index_1.js"></script>-->
+  </head>
+  <body>
+      <div id="meter"></div>
+        <div id="index" style="margin-bottom: 10px;">
+            <div class="label-success" style="width: 100%; text-align: center; font-size: 32px; font-weight: bold; color: #FFF; margin-bottom: 20px;">
+                <span class="pull-right" style="margin-right: 10px; font-size: 24px;" onclick='$("#modal_help").modal("show");'> ? </span>Nuevo pre-screening<br />APPREXOR
+            </div>
+            <div style="margin-left: 15px;">Por favor complete el formulario para registrar una nueva medición.</div>
+            <div class="container-fluid">
+                <div class="row">
+                    <div class="col-xs-12">
+                        <div class="form-horizontal">
+                            <fieldset>
+                                <form id="data" data-toggle="validatorr" role="form">
+                                    <div class="form-group">
+                                      <label for="company" class="col-lg-2 control-label">Nombre de la empresa</label>
+                                      <div class="col-lg-10">
+                                        <input type="text" class="form-control" name="company" id="company" placeholder="Empresa" data-label="Nombre de la empresa" required>
+                                      </div>
+                                    </div>
+                                    <div class="form-group">
+                                      <label for="admin" class="col-lg-2 control-label">Organismo Administrador</label>
+                                      <div class="col-lg-10">
+                                          <select class="form-control" name="admin" id="admin" data-label="Organismo Administrador">
+                                              <option>ACHS</option>
+                                              <option>IST</option>
+                                              <option>Mutual de Seguridad</option>
+                                          </select>
+                                      </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="email" class="col-lg-2 control-label">Email del usuario</label>
+                                        <div class="col-lg-10">
+                                          <input type="email" class="form-control" name="email" id="email" placeholder="usuario@example.com" data-label="Email del usuario" required>
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="area" class="col-lg-2 control-label">Área o Proceso</label>
+                                        <div class="col-lg-10">
+                                          <input type="text" class="form-control" name="area" id="area" placeholder="Área o proceso a medir" data-label="Área o Proceso" required>
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="space" class="col-lg-2 control-label">Puesto de trabajo a evaluar</label>
+                                        <div class="col-lg-10">
+                                          <input type="text" class="form-control" name="space" id="space" placeholder="Puesto de trabajo a medir" data-label="Puesto de trabajo a evaluar" required>
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="tasks" class="col-lg-2 control-label">Tarea en el puesto de trabajo</label>
+                                        <div class="col-lg-10">
+                                          <input type="text" class="form-control" name="tasks" id="tasks" placeholder="Tarea específica durante exposición" data-label="Tarea en el puesto de trabajo" required>
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                      <label for="events_characteristics" class="col-lg-2 control-label">Tipo de medición</label>
+                                      <div class="col-lg-10">
+                                          <select class="form-control" name="events_characteristics" data-label="Tipo de medición" id="events_characteristics">
+                                              <option>Estándar (1 minuto)</option>
+                                              <option>Duración variable</option>
+                                              <option>Realizar medición con sonómetro externo</option>
+                                          </select>
+                                      </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="primary_source" class="col-lg-2 control-label">Fuente directa de ruido relacionada al puesto de trabajo</label>
+                                        <div class="col-lg-10">
+                                          <input type="text" class="form-control" name="primary_source" id="primary_source" placeholder="Fuente directa de ruido" data-label="Fuente directa de ruido relacionada al puesto de trabajo" required>
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                      <label for="other_sources" class="col-lg-2 control-label">¿Existen otras fuentes de ruido?</label>
+                                      <div class="col-lg-10">
+                                          <select class="form-control" id="other_sources" name="other_sources" data-label="¿Existen fuentes secundarias de ruido?">
+                                              <option value="no">No</option>
+                                              <option value="si">Si</option>
+                                          </select>
+                                      </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="hours" class="col-lg-2 control-label">Horas diarias de exposición al ruido</label>
+                                        <div class="col-lg-10">
+                                          <input type="number" class="form-control" name="hours" id="hours" placeholder="Horas de exposición en puesto" data-label="Horas diarias de exposición al ruido" required>
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="count" class="col-lg-2 control-label">Cantidad de trabajadores que comparten el puesto de trabajo</label>
+                                        <div class="col-lg-10">
+                                          <input type="number" class="form-control" name="count" id="count" placeholder="" data-label="Cantidad de trabajadores que comparten el puesto de trabajo" required>
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                      <label for="other_afected" class="col-lg-2 control-label">¿Existen otros puestos de trabajos expuestos al ruido?</label>
+                                      <div class="col-lg-10">
+                                          <select class="form-control" id="other_afected" name="other_afected" data-label="¿Existen otros puestos de trabajos expuestos al ruido?">
+                                              <option value="no">No</option>
+                                              <option value="si">Si</option>
+                                          </select>
+                                      </div>
+                                    </div>
+                                    <div class="form-group">
+                                      <label for="use_protection" class="col-lg-2 control-label">Al momento de la medición, el trabajador en el puesto de trabajo, ¿está utilizando algún tipo de elemento de protección auditiva?</label>
+                                      <div class="col-lg-10">
+                                          <select class="form-control" id="use_protection" name="use_protection" data-label="Al momento de la medición, el trabajador en el puesto de trabajo, ¿está utilizando algún tipo de elemento de protección auditiva?" onchange="protection_changed($(this));">
+                                              <option value="no">No</option>
+                                              <option value="si">Si</option>
+                                          </select>
+                                      </div>
+                                    </div>
+                                    <div class="form-group">
+                                      <label for="protection_type" class="col-lg-2 control-label">Tipo de elemento de protección auditiva</label>
+                                      <div class="col-lg-10">
+                                          <select class="form-control" name="protection_type" id="protection_type" data-label="Tipo de elemento de protección auditiva" disabled>
+                                              <option>Orejeras</option>
+                                              <option>Orejeras acoplables al casco</option>
+                                              <option>Tapones desechables</option>
+                                              <option>Tapones reutilizables</option>
+                                          </select>
+                                      </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="protection_model" class="col-lg-2 control-label">Marca y modelo de elemento de protección auditiva</label>
+                                        <div class="col-lg-10">
+                                          <select class="form-control" name="protection_model" id="protection_model" data-label="Marca y modelo de elemento de protección auditiva" disabled>
+                                              <option>3M</option>
+                                              <option>Howard Leight</option>
+                                              <option>Steelpro</option>
+                                              <option>Masprot</option>
+                                              <option>Otra</option>
+                                              <option>No sabe</option>
+                                          </select>
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="aditional" class="col-lg-2 control-label">Observaciones adicionales</label>
+                                        <div class="col-lg-10">
+                                            <textarea class="form-control" rows="3" name="aditional" data-label="Observaciones adicionales" placeholder="Agregue comentarios relevantes que no se mencionan en los campos preguntados anteriormente: “Al momento de la medición se está ocupando una soldadora momentáneamente que produce ruido extra”, “hay grandes ventiladores que podrían afectar la medición”, etc." id="aditional"></textarea>
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <div class="col-lg-10 col-lg-offset-2">
+                                            <button type="submit" name="submit" class="btn btn-warning btn-block" onclick="initiate_process($(this))">Siguiente</button>
+                                        </div>
+                                    </div>
+                                </form>
+                            </fieldset>
+                          </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- Modals -->
+        <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+          <div class="modal-dialog" role="document">
+            <div class="modal-content">
+              <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                <h4 class="modal-title" id="myModalLabel">
+                    Instrucciones
+                </h4>
+              </div>
+              <div class="modal-body">
+                  <p></p>
+                  <strong>Por favor, siga estas instrucciones para iniciar la medición con su dispositivo móvil:<br /><br />1. En el puesto de trabajo a medir, identifique el micrófono externo conectado al teléfono. <br />2. Posiciónelo a la altura del oído más expuesto del trabajador, a una distancia entre 10cm y 30cm, en dirección hacia la fuente de ruido, procurando no moverlo y dejarlo fijo durante el periodo de la medición. <br />3. Presione el botón “Iniciar medición”.</strong>
+                  <p></p>
+              </div>
+              <div class="modal-footer">
+                <!--<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>-->
+                <button type="button" class="btn btn-warning btn-block" data-dismiss="modal" onclick="recordAudio();">Iniciar medición</button>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="modal fade" id="myModalExternal" tabindex="-1" role="dialog" aria-labelledby="myModalExternalLabel">
+          <div class="modal-dialog" role="document">
+            <div class="modal-content">
+              <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                <h4 class="modal-title" id="myModalLabel">
+                    Instrucciones
+                </h4>
+              </div>
+              <div class="modal-body">
+                  <p></p>
+                  <strong>Por favor, siga estas instrucciones para realizar la medición con su sonómetro externo:<br /><br />1. Calibre su sonómetro siguiendo las indicaciones del fabricante. <br />2. En el puesto de trabajo a medir, identifique el micrófono del sonómetro. <br />Posiciónelo a la altura del oído más expuesto del trabajador a una distancia entre 10cm y 30cm, en dirección hacia la fuente de ruido. <br /> 4. Una vez finalizada la medición, presione el botón “Ingresar medición” para registrar los datos obtenidos.</strong>
+                  <p></p>
+              </div>
+              <div class="modal-footer">
+                <!--<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>-->
+                <button type="button" class="btn btn-warning btn-block" data-dismiss="modal" onclick="recordAudio('soundmeter');">Iniciar medición</button>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="modal fade" id="modal_start" tabindex="-1" role="dialog" aria-labelledby="modal_startLabel">
+          <div class="modal-dialog" role="document">
+            <div class="modal-content">
+              <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                <h4 class="modal-title" id="myModalLabel">
+                    Bienvenido a App Prexor
+                </h4>
+              </div>
+              <div class="modal-body">
+                  <p></p>
+                  <strong>Apprexor es una aplicación versión beta desarrollada con fondos de investigación de la SUSESO, en colaboración con ACHS y el Centro de Investigación en Complejidad Social. 
+Las mediciones registradas por la aplicación no son resultados oficiales, sino referenciales, por lo que se recomienda contactar a su Mutual para informar y/o comprobar éstos resultados.
+Para mayor información dirigirse a <a href="https://apprexor.udd.cl/" target="_blank">https://apprexor.udd.cl/</a></strong>
+                  <p></p>
+              </div>
+              <div class="modal-footer">
+                <button type="button" class="btn btn-default pull-left" data-dismiss="modal">Aceptar</button>
+                <button type="button" class="btn btn-warning pull-right" data-dismiss="modal" onclick='$("#modal_help").modal("show");'>Ver instrucciones</button>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="modal fade" id="modal_clear_data" tabindex="-1" role="dialog" aria-labelledby="modal_clear_dataLabel">
+          <div class="modal-dialog" role="document">
+            <div class="modal-content">
+              <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                <h4 class="modal-title" id="myModalLabel">
+                    ¿Descartar datos?
+                </h4>
+              </div>
+              <div class="modal-body">
+                  <p></p>
+                  <strong>Para crear una nueva medición, por favor indique si desea conservar los datos actuales para completar el formulario de caracterización de la medición o si desea descartar los datos para comenzar con un formulario vacío.</strong>
+              </div>
+              <div class="modal-footer">
+                <button type="button" class="btn btn-default pull-left" data-dismiss="modal" onclick="resume(false)">Conservar datos</button>
+                <button type="button" class="btn btn-warning pull-right" data-dismiss="modal" onclick="resume(true)">Descartar datos</button>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="modal fade" id="modal_help" tabindex="-1" role="dialog" aria-labelledby="modal_clear_dataLabel" style='height: 99%; overflow-y: scroll;'>
+          <div class="modal-dialog" role="document">
+            <div class="modal-content">
+              <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                <h4 class="modal-title" id="myModalLabel">
+                    INSTRUCCIONES DE USO
+                </h4>
+              </div>
+              <div class="modal-body">
+                  <p></p>
+                  <p>1. Complete el formulario con los datos solicitados  (nombre de la empresa, mutualidad, área, puesto de trabajo, tarea, y características del ruido a medir). <br />
+                        2. Luego, la aplicación ofrece 3 opciones de tipos de mediciones a registrar: <br />
+                        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 1. Medición realizada por la Apprexor para ruidos de duración estándar: opción recomendada para realizar la medición durante 1 minuto. <br />
+                        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 2. Medición realizada por la Apprexor para ruidos de duración variable: opción recomendada para medir ruidos durante un periodo de tiempo estimada por el usuario. <br />
+                        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 3 Registrar resultados obtenidos por Sonómetro externo: opción recomendada para expertos en prevención que realizan las mediciones con instrumentación normada. <br />
+                        3. Indique según corresponda, el tipo de medición que registrará: duración estándar, duración variable o medición por sonómetro externo. Las mediciones realizadas con la aplicación Apprexor requieren de la utilización de un micrófono externo RODE SmartLav+, y la utilización de un celular con sistema operativo Android versión 5.0 o superior para su óptimo desempeño.  <br />
+                        4. Revise que los datos ingresados en el formulario estén correctos. Al terminar, presione el botón “Siguiente”. <br />
+                        5. En caso de seleccionar la opción para que la aplicación realice la medición (ruidos de duración estándar o variable), continúe con los siguientes pasos, asegurándose de contar con la implementación adecuada para ello:  <br />
+                        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 1. Siga las instrucciones que se presentan en la pantalla para posicionar adecuadamente el micrófono externo durante la medición, de manera que quede a la altura del oído más expuesto del trabajador a una distancia entre 10cm y 30cm, en dirección hacia la fuente de ruido, procurando dejarlo fijo durante el periodo de la medición.  <br />
+                        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 2. Presione el botón “Iniciar Medición”. <br />
+                        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 3. Espere a que se inicialice la medición. <br />
+                        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 4. Si seleccionó una duración estándar, espere durante un minuto hasta que termine la medición. La aplicación hará una cuenta regresiva desde los 60 segundos. <br />
+                        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 5. Si seleccionó duración variable, puede terminar la medición presionando el botón “Finalizar medición”. <br />
+                        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 6. En ambos casos, durante la medición, puede elegir descartar el registro actual y comenzar nuevamente la medición. Para esto presione el botón “Reiniciar medición”. <br />
+                        6. En caso que realice la medición con un sonómetro externo, deberá completar el formulario que se presenta con información del valor Leq obtenido, duración de la medición en segundos, y marca, modelo y número de serie del sonómetro. Cuando termine, presione el botón “Siguiente”. <br />
+                        7. Se presentará una pantalla con los resultados de la medición y su clasificación correspondiente de acuerdo al nivel de exposición de ruido detectada. Después de revisar la información, presione el botón “Siguiente”. <br />
+                        8. Se presentará una pantalla resumen con la información ingresada en el formulario de caracterización del ruido y los resultados de la medición. Para guardar los datos en el servidor, procure estar conectado a internet y presione el botón “Guardar medición”. También puede descartar los datos de la medición, presionando el botón “Descartar medición”. <br />
+                        9. Luego de guardar o descartar la medición, se volverá al formulario inicial y la aplicación le entregará la opción de prellenar el formulario con los datos de la medición anterior o de comenzar nuevamente con el formulario vacío. <br />
+                         <br />
+                        Notas sobre esta versión: <br />
+                        - Requerimiento mínimo sistema operativo: Android, versión 5.0 o superior. <br />
+                        - El uso de esta aplicación móvil está orientado a la medición de ruidos estables o fluctuantes. No se aconseja su utilización para ruidos de tipo impulsivo. <br />
+                        - Esta aplicación permite al usuario utilizar el mismo dispositivo móvil para realizar una medición de ruido o ingresar datos de una medición realizada con un sonómetro externo. En caso que el ruido sea medido a través de la aplicación, el usuario podrá elegir la duración del registro de ruido entre las siguientes opciones: <br />
+                        &nbsp;&nbsp;&nbsp;- Duración estándar (1 minuto), similar a lo establecido en el protocolo Prexor. <br />
+                        &nbsp;&nbsp;&nbsp;- Duración variable, donde el usuario tiene el control y decide cuando terminar el registro de ruido para la medición. <br />
+                        - Conexión a internet:
+                        La aplicación no requiere de conexión a internet para ingresar datos y realizar mediciones. No obstante, si desea guardar los datos de la medición debe conectarse a internet para el envío de la información al servidor.
+                        - Esta aplicación está optimizada para su uso con el micrófono externo RODE smartLav+.
+                         <br />
+                        - Puede revisar el estudio sobre la precisión de esta herramienta de medición en el siguiente enlace.
+                        </p>
+              </div>
+              <div class="modal-footer">
+                <button type="button" class="btn btn-warning pull-right" data-dismiss="modal"> OK </button>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div id="external_measure"  style="margin-bottom: 10px; display: none;">
+            <div class="text-success" style="width: 100%; text-align: center; font-size: 32px; font-weight: bold; margin-bottom: 20px;">
+                Medición con Sonómetro
+            </div>
+            <div style="margin-left: 15px; margin-bottom: 10px;">Por favor complete los siguientes campos con la información de la medición realizada con un sonómetro externo.</div>
+            <div class="container-fluid">
+                <div class="row">
+                    <div class="col-xs-12">
+                        <div class="form-horizontal">
+                            <fieldset>
+                                <form id="external_data" data-toggle="validator" role="form">
+                                    <div class="form-group">
+                                      <label for="external_result" class="col-lg-2 control-label">Resultado de la medición, en dB(A)</label>
+                                      <div class="col-lg-10">
+                                        <input type="number" class="form-control" name="external_result" id="external_result" placeholder="" required>
+                                      </div>
+                                    </div>
+                                    <div class="form-group">
+                                      <label for="external_duration" class="col-lg-2 control-label">Duración de la medición, en segundos</label>
+                                      <div class="col-lg-10">
+                                        <input type="number" class="form-control" name="external_duration" id="external_duration" placeholder="" required>
+                                      </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="external_type" class="col-lg-2 control-label">Marca del sonómetro</label>
+                                        <div class="col-lg-10">
+                                          <input type="text" class="form-control" name="external_type" id="external_type" placeholder="" required>
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="external_model" class="col-lg-2 control-label">Modelo del sonómetro</label>
+                                        <div class="col-lg-10">
+                                          <input type="text" class="form-control" name="external_model" id="external_model" placeholder="" required>
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="external_serial" class="col-lg-2 control-label">Número de serie del sonómetro</label>
+                                        <div class="col-lg-10">
+                                          <input type="text" class="form-control" name="external_serial" id="external_serial" placeholder="" required>
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <div class="col-lg-10 col-lg-offset-2">
+                                            <button type="button" name="cancel" class="btn btn-default pull-left" onclick="restart(true)">Atrás</button>
+                                            <button type="submit" name="submit" class="btn btn-warning pull-right" onclick="stop_record_external($(this))">Siguiente</button>
+                                        </div>
+                                    </div>
+                                </form>
+                            </fieldset>
+                          </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div id="recording" style="margin-bottom: 10px; display: none;">
+            <div class="container-fluid">
+                <div class="row">
+                    <div class="col-xs-12">
+                        <h2 id="info" style="text-align: center; margin-top: 100px; font-weight: bold;">Inicializando...</h2>
+                            <div class="row">
+                                <div class="col-xs-12" style="margin-top: 20px;">
+                                    <div id="fuel-gauge-record" style="margin-top: -120px; margin-bottom: 80px;"></div>
+                                    <button id="stop_record" class="btn btn-primary btn-block" onclick="stop_record()" style="display: none;">Finalizar medición</button>
+                                </div>
+                            </div>
+                            <div class="row" style="margin-top: 20px;">
+                                <div class="col-xs-12">
+                                    <button id="restart_record" class="btn btn-success btn-block" onclick="restart_record()" style="display: none;">Reiniciar medición</button>
+                                </div>
+                            </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div id="result" style="margin-bottom: 10px; display: none;">
+            <div class="text-primary" style="width: 100%; text-align: center; font-size: 32px; font-weight: bold; margin-bottom: 16px;">
+                RESULTADO DE LA MEDICIÓN
+            </div>
+            <div class="container-fluid">
+                <div class="row">
+                    <div class="col-xs-12">
+                        <div id="fuel-gauge" style="margin-top: -60px; margin-bottom: 20px;"></div>
+                        <div class="form-horizontal">
+                            <fieldset>
+                                <div class="form-group">
+                                    <div class="col-lg-10">
+                                        <p><b>Nivel de ruido promedio:</b> <span id="audio_level"></span></p>
+                                        <p><b>Nivel maximo de ruido:</b> <span id="audio_level_max"></span></p>
+                                        <!--<p><b>Nivel minimo de ruido:</b> <span id="audio_level_min"></span></p>-->
+                                        <p><b>Nivel de exposición:</b> <span id="audio_level_text"></span></p>
+                                        <p><b>Duración de la medición:</b> <span id="audio_time_text"></span></p>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <div class="col-lg-10" style="text-align: center">
+                                        <p><i>Se espera que una medición PREXOR, para este mismo nively tipo de ruido entregue un valor dentro del siguiente rango.</i></p>
+                                        <div class="sparkboxplotraw"></div>
+                                        <p><span id="spark_value_minus"></span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span id="spark_value"></span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span id="spark_value_plus"></span>&nbsp;&nbsp;&nbsp;&nbsp;</p>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <div class="col-lg-10">
+                                        <p>Recuerda los límites establecidos en PREXOR:</p>
+                                        <b>Nivel de exposición:</b> <span id="audio_level_text"></span>
+                                        <ul>
+                                            <li>80 dB(A): base para considerar un trabajador expuesto.</li>
+                                            <li>82 dB(A): criterio de acción establecido.</li>
+                                            <li>85 dB(A): límite máximo permisible para 8 horas.</li>
+                                            <li>95 dB(A): exposición sobre 10 veces el límite máximo permisible.</li>
+                                        </ul>
+                                    </div>
+                                </div>
+                                <button type="submit" class="btn btn-success btn-block" style="margin-top: 20px;" onclick="show_resumen();">Siguiente</button>
+                            </fieldset>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div id="resumen" style="margin-bottom: 10px; display: none;">
+            <div class="text-success" style="width: 100%; text-align: center; font-size: 32px; font-weight: bold; margin-bottom: 20px;">
+                Resumen de la Medición
+            </div>
+            <div class="container-fluid">
+                <div class="row">
+                    <div class="col-xs-12">
+                        <div class="form-horizontal">
+                            <fieldset>
+                                <div id="resumen_data">
+                                    
+                                </div>
+                                <div class="form-group">
+                                  <div class="col-lg-10 col-lg-offset-2">
+                                      <button type="submit" class="btn btn-default" onclick="restart()" style="max-width: 45%; overflow-wrap: break-word; white-space: normal;">Descartar medición</button>
+                                      <button type="submit" class="btn btn-warning pull-right" onclick="save_resumen()" style="max-width: 45%; overflow-wrap: break-word; white-space: normal;">&nbsp;Guardar medición&nbsp;</button>
+                                  </div>
+                                </div>
+                            </fieldset>
+                          </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    <script>
+        //$("input:checkbox").bootstrapSwitch();
+        $("#data").submit(function(e){ return false; });
+        $("#external_data").submit(function(e){ return false; });
+    </script>
+  </body>
+</html>
